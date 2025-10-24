@@ -9,7 +9,7 @@ hours.visAabningstider();
     }
 
 
-    private LinkedHashMap<String, String> openingHours;
+    private LinkedHashMap<String, String>openingHours;
 
     //Constructor
     public OpeningHours() {
