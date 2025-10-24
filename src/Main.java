@@ -8,6 +8,3 @@ public class Main {
 
     }
 }
-public class opening hours{
-
-}
