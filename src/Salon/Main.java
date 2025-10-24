@@ -1,3 +1,5 @@
+package Salon;
+
 public class Main {
     public static void main(String[] arg){
         System.out.println("kan du se det otto");
