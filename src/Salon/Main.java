@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static ArrayList<Appointment> appointments = new ArrayList<>();
     static Scanner input = new Scanner(System.in);
@@ -15,11 +13,11 @@ public class Main {
         loadAppointmentsFromFile();
 
         System.out.println("  VELKOMMEN TIL HARRY`S SALON");
-        System.out.println("      ÅBNINGESTEDER:        ");
+        System.out.println("      ÅBNINGSTIDER:        ");
 
         System.out.println("      MANDAG-FREDAG: 10-18   ");
-        System.out.println("      LØRDAG: lukker        ");
-        System.out.println("      SØNDAG: lukker         ");
+        System.out.println("      LØRDAG: Lukket        ");
+        System.out.println("      SØNDAG: Lukket         ");
 
 
         while (going) {
@@ -44,7 +42,7 @@ public class Main {
                     break;
 
                 case 3:
-                    deleteAppointment();
+                    deleteAppointmentByName();
                     break;
 
                 case 4:
@@ -63,6 +61,7 @@ public class Main {
             }
         }
     }
+
     public static void viewAppointments() {
         if (appointments.isEmpty()) {
             System.out.println("Der er ingen aftaler endnu.");
@@ -78,7 +77,7 @@ public class Main {
         System.out.print("Indtast kundens navn: ");
         String name = input.nextLine();
 
-        System.out.print("Indtast dato (f.eks. 2025-11-10): ");
+        System.out.print("Indtast dato (f.eks. 10/10-2025): ");
         String date = input.nextLine();
 
         System.out.print("Indtast tidspunkt (f.eks. 17:00): ");
@@ -91,25 +90,29 @@ public class Main {
         System.out.println("Aftale oprettet!");
     }
 
-    public static void deleteAppointment() {
-        viewAppointments();
-        if (appointments.isEmpty()) return;
+    public static void deleteAppointmentByName() {
+        System.out.print("Indtast kundens navn på aftalen du vil slette: ");
+        String name = input.nextLine();
 
-        System.out.print("Indtast nummeret: ");
-        int phoneNr = input.nextInt();
-        input.nextLine();
+        boolean found = false;
+        for (int i = 0; i < appointments.size(); i++) {
+            if (appointments.get(i).getName().equalsIgnoreCase(name)) {
+                appointments.remove(i);
+                saveAppointmentsToFile();
+                System.out.println("Aftale med " + name + " slettet!");
+                found = true;
+                break;
+            }
+        }
 
-        if (phoneNr > 0 && phoneNr <= appointments.size()) {
-            appointments.remove(phoneNr - 1);
-            System.out.println("Aftale slettet!");
-        } else {
-            System.out.println("Ugyldigt nummer.");
+        if (!found) {
+            System.out.println("Ingen aftale fundet med navnet " + name + ".");
         }
     }
 
     public static void saveAppointmentsToFile() {
         try {
-            FileWriter fil = new FileWriter("src/Salon/appointments.txt");
+            FileWriter fil = new FileWriter("src/Salon/appointments.txt", true);
             PrintWriter ud = new PrintWriter(fil);
             for (Appointment app : appointments) {
                 ud.println(app.getName() + ":" + app.getDate() + ":" + app.getTime());
@@ -139,6 +142,5 @@ public class Main {
             System.out.println("Fejl ved indlæsning: " + e.getMessage());
         }
     }
-
-
 }
+
