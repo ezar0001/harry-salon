@@ -16,8 +16,9 @@ public class Main {
         while (going) {
             System.out.println("Harry's Salon");
             System.out.println("1. Se aftaler");
-            System.out.println(" 2. Opret ny aftale");
+            System.out.println("2. Opret ny aftale");
             System.out.println("3. Slet eksisterende aftale");
+            System.out.println("4 Åbningstider");
             System.out.println("0. Luk program ned");
             System.out.println("Vælg: ");
 
@@ -35,6 +36,10 @@ public class Main {
 
                 case 3:
                     deleteAppointment();
+                    break;
+                case 4:
+                    OpeningHours hours = new OpeningHours();
+                    hours.visAabningstider();
                     break;
 
                 case 0:
