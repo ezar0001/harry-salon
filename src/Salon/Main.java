@@ -13,7 +13,6 @@ public class Main {
     public static void main(String[] args) {
         boolean going = true;
         loadAppointmentsFromFile();
-
         while (going) {
             System.out.println("Harry's Salon");
             System.out.println("1. Se aftaler");
@@ -70,7 +69,10 @@ public class Main {
         System.out.print("Indtast tidspunkt (f.eks. 17:00): ");
         String time = input.nextLine();
 
-        Appointment newApp = new Appointment(name, date, time);
+        System.out.println("Indtast hvilket klip du vil have (herre eller dame)");
+        String klip=input.nextLine();
+
+        Appointment newApp = new Appointment(name, date, time, klip);
         appointments.add(newApp);
         saveAppointmentsToFile();
 
@@ -98,7 +100,7 @@ public class Main {
             FileWriter fil = new FileWriter("src/Salon/appointments.txt");
             PrintWriter ud = new PrintWriter(fil);
             for (Appointment app : appointments) {
-                ud.println(app.getName() + ":" + app.getDate() + ":" + app.getTime());
+                ud.println(app.getName() + ":" + app.getDate() + ":" + app.getTime()+":"+app.getKlip()+" ");
             }
             ud.close();
         } catch (IOException e) {
@@ -116,8 +118,8 @@ public class Main {
             String line;
             while ((line = ind.readLine()) != null) {
                 String[] parts = line.split(":");
-                if (parts.length == 3) {
-                    appointments.add(new Appointment(parts[0].trim(), parts[1].trim(), parts[2].trim()));
+                if (parts.length == 4) {
+                    appointments.add(new Appointment(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim()));
                 }
             }
             ind.close();

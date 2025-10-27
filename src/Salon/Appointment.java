@@ -4,11 +4,13 @@ public class Appointment {
     private String name;
     private String date;
     private String time;
+    private String klip;
 
-    public Appointment(String name, String date, String time) {
+    public Appointment(String name, String date, String time, String klip) {
         this.name = name;
         this.date = date;
         this.time = time;
+        this.klip = klip;
     }
 
     public String getName(){
@@ -23,7 +25,11 @@ public class Appointment {
         return time;
     }
 
+    public String getKlip(){
+        return klip;
+    }
+
     public String toString() {
-        return date + "kl. " + time + " - " + name;
+        return date + "kl. " + time + " - " + name + klip;
     }
 }
