@@ -14,6 +14,14 @@ public class Main {
         boolean going = true;
         loadAppointmentsFromFile();
 
+        System.out.println("  VELKOMMEN TIL HARRY`S SALON");
+        System.out.println("      ÅBNINGESTEDER:        ");
+
+        System.out.println("      MANDAG-FREDAG: 10-18   ");
+        System.out.println("      LØRDAG: lukker        ");
+        System.out.println("      SØNDAG: lukker         ");
+
+
         while (going) {
             System.out.println("Harry's Salon");
             System.out.println("1. Se aftaler");
