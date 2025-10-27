@@ -1,6 +1,8 @@
 package Salon;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,6 +15,7 @@ public class Main {
     public static void main(String[] args) {
         boolean going = true;
         loadAppointmentsFromFile();
+        OpeningHours2 OpeningHours =new OpeningHours2();
         while (going) {
             System.out.println("Harry's Salon");
             System.out.println("1. Se aftaler");
@@ -64,10 +67,10 @@ public class Main {
         String name = input.nextLine();
 
         System.out.print("Indtast dato (f.eks. 2025-11-10): ");
-        String date = input.nextLine();
+        LocalDate date = LocalDate.parse(input.nextLine());
 
         System.out.print("Indtast tidspunkt (f.eks. 17:00): ");
-        String time = input.nextLine();
+        LocalTime time = LocalTime.parse(input.nextLine());
 
         System.out.println("Indtast hvilket klip du vil have (herre eller dame)");
         String klip=input.nextLine();
@@ -78,6 +81,7 @@ public class Main {
 
         System.out.println("Aftale oprettet!");
     }
+
 
     public static void deleteAppointment() {
         viewAppointments();
@@ -100,7 +104,7 @@ public class Main {
             FileWriter fil = new FileWriter("src/Salon/appointments.txt");
             PrintWriter ud = new PrintWriter(fil);
             for (Appointment app : appointments) {
-                ud.println(app.getName() + ":" + app.getDate() + ":" + app.getTime()+":"+app.getKlip()+" ");
+                ud.println(app.getName() + ":" + app.getDate() + ":" + app.getTime()+":"+app.getKlip());
             }
             ud.close();
         } catch (IOException e) {
@@ -119,7 +123,7 @@ public class Main {
             while ((line = ind.readLine()) != null) {
                 String[] parts = line.split(":");
                 if (parts.length == 4) {
-                    appointments.add(new Appointment(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim()));
+                    appointments.add(new Appointment(parts[0].trim(), LocalDate.parse(parts[1].trim()), LocalTime.parse(parts[2].trim()), parts[3].trim()));
                 }
             }
             ind.close();

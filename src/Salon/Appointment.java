@@ -1,12 +1,15 @@
 package Salon;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Appointment {
     private String name;
-    private String date;
-    private String time;
+    private LocalDate date;
+    private LocalTime time;
     private String klip;
 
-    public Appointment(String name, String date, String time, String klip) {
+    public Appointment(String name, LocalDate date, LocalTime time, String klip) {
         this.name = name;
         this.date = date;
         this.time = time;
@@ -17,11 +20,11 @@ public class Appointment {
         return name;
     }
 
-    public String getDate(){
+    public LocalDate getDate(){
         return date;
     }
 
-    public String getTime(){
+    public LocalTime getTime(){
         return time;
     }
 
@@ -30,6 +33,6 @@ public class Appointment {
     }
 
     public String toString() {
-        return date + "kl. " + time + " - " + name + klip;
+        return date + " kl. " + time + " - " + name+" " + klip;
     }
 }

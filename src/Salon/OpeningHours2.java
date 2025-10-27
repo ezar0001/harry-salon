@@ -1,3 +1,5 @@
+package Salon;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,14 +48,14 @@ while(!current.isAfter(LocalDateTime.of(dato,slut))){
         LocalDate idag= LocalDate.now();
         for (int i=0;i<4;i++){
             LocalDate fremdato=idag.plusDays(i);
-            timeSlots(dato, start,slut,interval);
+            timeSlots(fremdato, start,slut,interval);
         }
     }
     //Når man kalder den skriver man startdato, og hvor mange dage frem man har ferie, som så adder alle de datoer til ferie settet.
 public void addFerie(LocalDate startdato,int dagefrem){
         for(int n=0;n<dagefrem;n++){
-            ferie.add(startdato);
-            startdato.plusDays(n);
+            ferie.add(startdato.plusDays(n));
+            System.out.println("ser bare om det virker");
         }
 
     }
