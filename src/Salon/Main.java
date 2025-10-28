@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class Main {
     static ArrayList<Appointment> appointments = new ArrayList<>();
     static Scanner input = new Scanner(System.in);
+    static OpeningHours salonHours = new OpeningHours();
+
 
     public static void main(String[] args) {
         boolean going = true;
@@ -26,6 +28,7 @@ public class Main {
             System.out.println("2. Opret ny aftale");
             System.out.println("3. Slet eksisterende aftale");
             System.out.println("4. Se åbningstider ");
+            System.out.println("5  Rediger Åbningstider");
             System.out.println("0. Luk program ned");
             System.out.println("Vælg: ");
 
@@ -45,10 +48,13 @@ public class Main {
                     deleteAppointmentByName();
                     break;
 
-               // case 4:
-                 //   OpeningHours hours = new OpeningHours();
-                 //   hours.();
-                //    break;
+                case 4:
+                    salonHours.showHours();
+                    break;
+
+                case 5:
+                    salonHours.editHour();
+                    break;
 
                 case 0:
                     System.out.println("Programmet lukker ned.");
