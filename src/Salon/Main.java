@@ -45,10 +45,10 @@ public class Main {
                     deleteAppointmentByName();
                     break;
 
-                case 4:
-                    OpeningHours hours = new OpeningHours();
-                    hours.visAabningstider();
-                    break;
+               // case 4:
+                 //   OpeningHours hours = new OpeningHours();
+                 //   hours.();
+                //    break;
 
                 case 0:
                     System.out.println("Programmet lukker ned.");
