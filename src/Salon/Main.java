@@ -29,6 +29,7 @@ public class Main {
             System.out.println("3. Slet eksisterende aftale");
             System.out.println("4. Se åbningstider ");
             System.out.println("5  Rediger Åbningstider");
+            System.out.println("6. Se regning fra en dato");
             System.out.println("0. Luk program ned");
             System.out.println("Vælg: ");
 
@@ -54,6 +55,10 @@ public class Main {
 
                 case 5:
                     salonHours.editHour();
+                    break;
+
+                case 6:
+                    getBillFromDate();
                     break;
 
                 case 0:
@@ -158,5 +163,25 @@ public class Main {
             System.out.println("Fejl ved indlæsning: " + e.getMessage());
         }
     }
-}
 
+    public static void getBillFromDate() {
+        System.out.print("Indtast datoen du vil slå op: ");
+        String date = input.nextLine();
+        int len= appointments.size();
+        int count=0;
+
+        boolean found = false;
+        for (int i = 0; i < len; i++) {
+            if (appointments.get(i).getDate().equalsIgnoreCase(date)) {
+                found = true;
+                count++;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Ingen kunder på denne dato: " + date);
+        }
+        System.out.println("Samlede beløb indtjent på "  + date + ":"+ "\t" + count*250 + " kr.");
+    }
+
+}
