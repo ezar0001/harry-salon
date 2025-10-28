@@ -2,6 +2,7 @@ package Salon;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 public class Main {
     static ArrayList<Appointment> appointments = new ArrayList<>();
     static Scanner input = new Scanner(System.in);
+//    OpeningHours2 tildel =new OpeningHours2();
 
     public static void main(String[] args) {
         boolean going = true;
@@ -78,15 +80,20 @@ public class Main {
         LocalTime time = LocalTime.parse(input.nextLine());
 
         System.out.println("Indtast hvilket klip du vil have (herre eller dame)");
-        String klip=input.nextLine();
+        String klip = input.nextLine();
 
-        Appointment newApp = new Appointment(name, date, time, klip);
-        appointments.add(newApp);
-        saveAppointmentsToFile();
+        LocalDateTime datetime = LocalDateTime.of(date, time);
+        OpeningHours2 openingHours = new OpeningHours2();
 
-        System.out.println("Aftale oprettet!");
+        if (openingHours.Ledig(datetime)) {
+            Appointment newApp = new Appointment(name, date, time, klip);
+            appointments.add(newApp);
+            saveAppointmentsToFile();
+            System.out.println("Aftale oprettet!");
+        } else {
+            System.out.println("Aftale kan ikke bookes fordi salonen har lukket på dette tidspunkt.");
+        }
     }
-
 
     public static void deleteAppointment() {
         viewAppointments();
