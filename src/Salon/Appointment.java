@@ -24,6 +24,6 @@ public class Appointment {
     }
 
     public String toString() {
-        return date + "kl. " + time + " - " + name;
+        return name + "\t" + date + "\t " + " kl. " + time;
     }
 }

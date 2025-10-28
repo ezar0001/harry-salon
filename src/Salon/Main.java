@@ -85,8 +85,11 @@ public class Main {
 
         System.out.print("Indtast dato (f.eks. 10/10-2025): ");
         String date = input.nextLine();
+        //If statement: isOpenOnDate(date)
+        //true: Fortsæt processen med at lave en appointment
+        //false (else): Afbryd processen
 
-        System.out.print("Indtast tidspunkt (f.eks. 17:00): ");
+        System.out.print("Indtast tidspunkt (f.eks. 17.00): ");
         String time = input.nextLine();
 
         Appointment newApp = new Appointment(name, date, time);
@@ -99,12 +102,12 @@ public class Main {
     public static void deleteAppointmentByName() {
         System.out.print("Indtast kundens navn på aftalen du vil slette: ");
         String name = input.nextLine();
+        int len= appointments.size();
 
         boolean found = false;
-        for (int i = 0; i < appointments.size(); i++) {
+        for (int i = 0; i < len; i++) {
             if (appointments.get(i).getName().equalsIgnoreCase(name)) {
                 appointments.remove(i);
-                saveAppointmentsToFile();
                 System.out.println("Aftale med " + name + " slettet!");
                 found = true;
                 break;
@@ -114,12 +117,15 @@ public class Main {
         if (!found) {
             System.out.println("Ingen aftale fundet med navnet " + name + ".");
         }
+        saveAppointmentsToFile();
     }
 
     public static void saveAppointmentsToFile() {
         try {
-            FileWriter fil = new FileWriter("src/Salon/appointments.txt", true);
+            FileWriter fil = new FileWriter("src/Salon/appointments.txt");
             PrintWriter ud = new PrintWriter(fil);
+            ud.print("");
+
             for (Appointment app : appointments) {
                 ud.println(app.getName() + ":" + app.getDate() + ":" + app.getTime());
             }
@@ -133,13 +139,17 @@ public class Main {
     public static void loadAppointmentsFromFile() {
         try {
             File file = new File("src/Salon/appointments.txt");
-            if (!file.exists()) return;
+            if (!file.exists()){
+                System.out.println("KUNNE IKKE FINDE FIL");
+            }
 
             BufferedReader ind = new BufferedReader(new FileReader(file));
             String line;
             while ((line = ind.readLine()) != null) {
+                System.out.println(line);
                 String[] parts = line.split(":");
                 if (parts.length == 3) {
+                    System.out.println(parts);
                     appointments.add(new Appointment(parts[0].trim(), parts[1].trim(), parts[2].trim()));
                 }
             }
