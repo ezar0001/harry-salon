@@ -195,10 +195,10 @@ public class Main {
 //    }
 
     public static void getBillFromDate() throws IOException {
-        System.out.println("Indtast startdatoen: (dd/MM-yyy): ");
+        System.out.println("Indtast startdatoen: (dd/mm-yyyy): ");
         String startDatestring = input.nextLine();
 
-        System.out.println("Indtast slutdato: (dd/MM-yyyy)");
+        System.out.println("Indtast slutdato: (dd/mm-yyyy)");
         String slutDatostring = input.nextLine();
 
         DateTimeFormatter omformat = DateTimeFormatter.ofPattern("dd/MM-yyyy");
