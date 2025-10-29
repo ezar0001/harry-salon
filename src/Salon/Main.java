@@ -142,7 +142,7 @@ public class Main {
             ud.print("");
 
             for (Appointment app : appointments) {
-                ud.println(app.getName() + ":" + app.getDate() + ":" + app.getTime());
+                ud.println(app.getName() + ":" + app.getDate() + ":" + app.getTime() + ":" + app.getKlip());
             }
             ud.close();
         } catch (IOException e) {
@@ -216,7 +216,7 @@ public class Main {
         while ((linje =ind.readLine())!= null) {
             String[] parts = linje.split(":");
 
-            if (parts.length < 5) {
+            if (parts.length < 4) {
                 System.out.println("Skipper ugyldig line: "+linje);
                 continue;
             }
@@ -229,7 +229,7 @@ public class Main {
 
                     System.out.println(linje);
 
-                    String klip=parts[4].trim();
+                    String klip=parts[3].trim();
                     if (klip.equalsIgnoreCase("Herre"))Herre++;
                     else if (klip.equalsIgnoreCase("Dame")) Dame++;
 

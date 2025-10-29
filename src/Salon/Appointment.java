@@ -30,6 +30,6 @@ public class Appointment {
     }
 
     public String toString() {
-        return name + "\t" + date + "\t " + " kl. " + time + klip;
+        return name + "\t" + date + "\t " + " kl. " + time + " - " + klip;
     }
 }
