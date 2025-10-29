@@ -195,6 +195,15 @@ public class Main {
 //    }
 
     public static void getBillFromDate() throws IOException {
+        System.out.println("Skriv dit kodeord: ");
+        String kodeord= input.nextLine();
+
+        if(kodeord.equals("HairyHarry")){
+            System.out.println("Adgang tilladt");
+        }else{
+            System.out.println("forkert kodeord");
+        }
+
         System.out.println("Indtast startdatoen: (dd/mm-yyyy): ");
         String startDatestring = input.nextLine();
 
@@ -202,7 +211,7 @@ public class Main {
         String slutDatostring = input.nextLine();
 
         DateTimeFormatter omformat = DateTimeFormatter.ofPattern("dd/MM-yyyy");
-        LocalDate startDate = LocalDate.parse(startDatestring, omformat); //nu er string omformatteret til localdate
+        LocalDate startDate = LocalDate.parse(startDatestring, omformat); //nu// er string omformatteret til localdate
         LocalDate slutDate = LocalDate.parse(slutDatostring,omformat);
 
         FileReader fil = new FileReader("src/Salon/appointments.txt");
