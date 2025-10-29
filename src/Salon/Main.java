@@ -1,6 +1,9 @@
 package Salon;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -58,7 +61,11 @@ public class Main {
                     break;
 
                 case 6:
-                    getBillFromDate();
+                    try {
+                        getBillFromDate();
+                    }catch (IOException e){
+                        System.out.println("Filen kunne ikke læses: "+ e.getMessage());
+                    }
                     break;
 
                 case 0:
@@ -97,7 +104,10 @@ public class Main {
         System.out.print("Indtast tidspunkt (f.eks. 17.00): ");
         String time = input.nextLine();
 
-        Appointment newApp = new Appointment(name, date, time);
+        System.out.println("indtast klip (Herre eller Dame)");//Ny
+        String klip=input.nextLine();//ny
+
+        Appointment newApp = new Appointment(name, date, time, klip);//klip er ny
         appointments.add(newApp);
         saveAppointmentsToFile();
 
@@ -153,9 +163,9 @@ public class Main {
             while ((line = ind.readLine()) != null) {
                 System.out.println(line);
                 String[] parts = line.split(":");
-                if (parts.length == 3) {
+                if (parts.length == 4) {//ændret fra 3 til 4
                     System.out.println(parts);
-                    appointments.add(new Appointment(parts[0].trim(), parts[1].trim(), parts[2].trim()));
+                    appointments.add(new Appointment(parts[0].trim(), parts[1].trim(), parts[2].trim(), parts[3].trim()));//parts 3 ny
                 }
             }
             ind.close();
@@ -164,24 +174,74 @@ public class Main {
         }
     }
 
-    public static void getBillFromDate() {
-        System.out.print("Indtast datoen du vil slå op: ");
-        String date = input.nextLine();
-        int len= appointments.size();
-        int count=0;
+//    public static void getBillFromDate() {
+//        System.out.print("Indtast datoen du vil slå op: ");
+//        String date = input.nextLine();
+//        int len= appointments.size();
+//        int count=0;
+//
+//        boolean found = false;
+//        for (int i = 0; i < len; i++) {
+//            if (appointments.get(i).getDate().equalsIgnoreCase(date)) {
+//                found = true;
+//                count++;
+//            }
+//        }
+//
+//        if (!found) {
+//            System.out.println("Ingen kunder på denne dato: " + date);
+//        }
+//        System.out.println("Samlede beløb indtjent på "  + date + ":"+ "\t" + count*250 + " kr.");
+//    }
 
-        boolean found = false;
-        for (int i = 0; i < len; i++) {
-            if (appointments.get(i).getDate().equalsIgnoreCase(date)) {
-                found = true;
-                count++;
+    public static void getBillFromDate() throws IOException {
+        System.out.println("Indtast startdatoen: (dd/MM-yyy): ");
+        String startDatestring = input.nextLine();
+
+        System.out.println("Indtast slutdato: (dd/MM-yyyy)");
+        String slutDatostring = input.nextLine();
+
+        DateTimeFormatter omformat = DateTimeFormatter.ofPattern("dd/MM-yyyy");
+        LocalDate startDate = LocalDate.parse(startDatestring, omformat); //nu er string omformatteret til localdate
+        LocalDate slutDate = LocalDate.parse(slutDatostring,omformat);
+
+        FileReader fil = new FileReader("src/Salon/appointments.txt");
+        BufferedReader ind = new BufferedReader(fil);
+        String linje;
+
+
+        int Herre=0;
+        int Dame=0;
+
+        while ((linje =ind.readLine())!= null) {
+            String[] parts = linje.split(":");
+
+            if (parts.length < 5) {
+                System.out.println("Skipper ugyldig line: "+linje);
+                continue;
+            }
+
+            try {
+                LocalDate datoBid = LocalDate.parse(parts[1].trim(), omformat);
+
+                if ((datoBid.isEqual(startDate) || datoBid.isAfter(startDate)) &&
+                        (datoBid.isEqual(slutDate) || datoBid.isBefore(slutDate))) {
+
+                    System.out.println(linje);
+
+                    String klip=parts[4].trim();
+                    if (klip.equalsIgnoreCase("Herre"))Herre++;
+                    else if (klip.equalsIgnoreCase("Dame")) Dame++;
+
+                }
+
+            }catch(DateTimeParseException e){
+                System.out.println("Ugyldig dato på line: "+linje);
             }
         }
-
-        if (!found) {
-            System.out.println("Ingen kunder på denne dato: " + date);
-        }
-        System.out.println("Samlede beløb indtjent på "  + date + ":"+ "\t" + count*250 + " kr.");
+        ind.close();
+        System.out.println("Antal Herre:"+Herre+"Antal Dame:"+Dame);
+        System.out.println("Samlet indtjeneste for perioden = "+(Herre*200)*0.75+" + "+(Dame*300)*0.75);
     }
 
 }
