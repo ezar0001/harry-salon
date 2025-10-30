@@ -36,6 +36,14 @@ public class OpeningHours {
 
     // Lader ejeren ændre åbningstid for en bestemt dag
     public void editHour() {
+        System.out.println("Log in med kodeord:");
+        String kodeord =input.nextLine();
+        if (kodeord.equals("HairyHarry")){
+            System.out.println("Adgang tilladt");
+        }else{
+            System.out.println("Forkert kodeord");
+            return;
+        }
         System.out.print("\nSkriv dagen du vil ændre (fx 'Mandag'): ");
         String day = input.nextLine();
 

@@ -200,8 +200,9 @@ public class Main {
 
         if(kodeord.equals("HairyHarry")){
             System.out.println("Adgang tilladt");
-        }else{
+        }else {
             System.out.println("forkert kodeord");
+            return;
         }
 
         System.out.println("Indtast startdatoen: (dd/mm-yyyy): ");
